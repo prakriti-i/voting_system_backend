@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
 
         email: {
             type: String,
-            required: true,
             unique: true
         },
 
@@ -47,6 +46,11 @@ const userSchema = new mongoose.Schema(
         }, 
 
         isEligible: {
+            type: Boolean,
+            default: false
+        },
+
+        isVoted: {
             type: Boolean,
             default: false
         }

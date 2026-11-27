@@ -1,5 +1,11 @@
+import dns from "node:dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 import express from "express";
 import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+
+
 
 dotenv.config();
 
@@ -13,6 +19,14 @@ app.get("/", (req, res)=>{
     res.send("Voting System API is running!");
 })
 
-app.listen(PORT, () => {
+
+const startServer = async()=>{
+    await connectDB();
+
+    app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+};
+
+startServer();
