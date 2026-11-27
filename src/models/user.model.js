@@ -8,22 +8,24 @@ const userSchema = new mongoose.Schema(
         },
 
         dateOfBirth:{
-            type: string,
+            type: Date,
             required:true
         },
 
         email: {
             type: String,
-            unique: true
+            unique: true,
+            lowercase: true,
+            required: true
         },
 
         password: {
-            type:string,
+            type:String,
             required: true
         },
 
         phone: {
-            type: string,
+            type: String,
             required: true,
             unique: true
         },
@@ -39,11 +41,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true
         },
-
-        isVerified: {
-            type: Boolean,
-            default: false
-        }, 
 
         isEligible: {
             type: Boolean,

@@ -5,24 +5,27 @@ export async function createUser(req, res){
    try{
      const {name, dateOfBirth, email, password, phone, voterId} = req.body;
 
-     const regexExpression = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9._]+\.[A-Za-z]{2,}$/ ;
+      if(!name || !dateOfBirth || !email || !password || !phone || !voterId){
+        return res.status(400).json({
+            success: false,
+            message: "All fields are required"
+        }); 
+     }
+
+
+     const regexExpression = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/ ;
     if (regexExpression.test(email) === false){
         return res.status(400).json({message: "Invalid email format"});
     }
 
-     if(!name || !dateOfBirth || !email || !password || !phone || !voterId){
-        return res.status(400).json({
-            success: false,
-            message: "All fields are requiered"
+    
+     const existingUser = await User.findOne({
+        $or: [{email: email}, {phone: phone}, {voterId: voterId}]
         });
-        
-     }
-
-     const existingUser = await User.findOne({email: email}, {phone: phone}, {voterId: voterId});
      
      if (existingUser){
         return res.status(409).json({
-            success: fals,
+            success: false,
             message: "user already exists"
         });
      }
