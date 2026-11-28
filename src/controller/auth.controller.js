@@ -1,6 +1,6 @@
 import { generateToken } from "../middleware/auth.middleware.js";
 import bcrypt from "bcrypt"
-
+import User from "../models/user.model.js";
 
 
 
